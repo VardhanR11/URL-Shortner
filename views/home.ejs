@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
+        <h1 class="text-2xl font-bold text-center text-gray-800">URL Shortener</h1>
+        
+        <% if (locals.id) { %>
+            <p class="text-center text-green-600 mt-2"> URL Generated: <a href="http://localhost:8000/url/<%= id %>" class="text-blue-500 underline">http://localhost:8000/url/<%= id %></a></p>
+        <% } %>
+
+        <div class="mt-4 flex gap-2">
+            <form method="POST" action="/url" class="w-full flex gap-2">
+                <input type="text" name="url" placeholder="https://www.example.com" class="w-full p-2 border rounded-md" required />
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Generate</button>
+            </form>
+        </div>
+        
+        <% if (locals.url) { %>
+            <table class="w-full mt-6 border-collapse border border-gray-300">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="border p-2">S. No</th>
+                        <th class="border p-2">Short Id</th>
+                        <th class="border p-2">Redirect Id</th>
+                        <th class="border p-2">Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < locals.url.length; i++) { %>
+                        <tr class="text-center">
+                            <td class="border p-2"><%= i + 1 %></td>
+                            <td class="border p-2 text-blue-600"><%= locals.url[i].shortId %></td>
+                            <td class="border p-2"><a href="<%= locals.url[i].redirectURL %>" class="text-blue-500 underline"><%= locals.url[i].redirectURL %></a></td>
+                            <td class="border p-2"><%= locals.url[i].visitHistory.length %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</body>
+
+<!-- <body>
+    <h1>URL Shortner</h1>
+
+    <% if (locals.id) { %>
+     <p> URL Generated http://localhost:8000/url/<%= id %></p>
+    <% } %>
+
+    <div>
+        <form method="POST" action="/url">
+            <label for="">Enter your original URL</label>
+            <input type="text" name="url" placeholder="https//:www.example.com" />
+            <button type="submit">
+                Generate
+            </button>
+        </form>
+    </div>
+
+    <div>
+        <% if (locals.url) { %>
+            <table>
+                <thead>
+                    <th>S. No</th>
+                    <th>Short Id</th>
+                    <th>Redirt Id</th>
+                    <th>Clicks</th>
+                </thead>
+                <tbody>
+                    <% for (let i = 0; i < locals.url.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= locals.url[i].shortId %></td>
+                            <td><%= locals.url[i].redirectURL %></td>
+                            <td><%= locals.url[i].visitHistory.length %></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        <% } %> 
+    </div>
+</body> -->
+
+</html>
